@@ -197,14 +197,52 @@ runs:
       env:
         SETTINGS: '${{ inputs.settings }}'
 
-    # - name: 'Install Custom Commands'
-    #   shell: 'bash'
-    #   run: |-
-    #     set -euo pipefail
-    #     mkdir -p .gemini/commands
-    #     cp -r "${GITHUB_ACTION_PATH}/.github/commands/"* .gemini/commands/
-    #   env:
-    #     GITHUB_ACTION_PATH: '${{ github.action_path }}'
+    - name: 'Install Custom Commands'
+      shell: 'bash'
+      run: |-
+        set -euo pipefail
+        DEST_DIR=".gemini/commands"
+        mkdir -p "$DEST_DIR"
+
+        # 定义源目录
+        # 1. Action 自带的命令目录
+        ACTION_SRC="${GITHUB_ACTION_PATH}/.github/commands"
+        # 2. 用户仓库的命令目录 (Workspace)
+        USER_SRC="${GITHUB_WORKSPACE}/.github/commands"
+
+        install_commands() {
+          local src="$1"
+          local source_name="$2"
+
+          if [[ -d "$src" ]]; then
+            # 检查目录是否为空 (ls -A 检测除 . 和 .. 之外的所有文件)
+            if [ "$(ls -A "$src")" ]; then
+              echo "Installing ${source_name}..."
+              # 使用 cp -r src/. dst/ 的写法可以将隐藏文件一并复制，且不会因 glob 失败报错
+              cp -r "$src/." "$DEST_DIR/"
+            else
+              echo "Found ${source_name} directory but it is empty. Skipping."
+            fi
+          else
+            echo "No ${source_name} found at $src. Skipping."
+          fi
+        }
+
+        # --- 执行安装流程 ---
+        
+        # 第一步：安装 Action 内置命令 (作为底座)
+        install_commands "$ACTION_SRC" "Default commands (from Action)"
+
+        # 第二步：安装用户自定义命令 (如有同名文件，将覆盖内置命令)
+        install_commands "$USER_SRC" "Custom commands (from User Repository)"
+
+        # 调试信息：列出最终安装的命令
+        echo "Final list of installed commands:"
+        ls -la "$DEST_DIR"
+      env:
+        GITHUB_ACTION_PATH: '${{ github.action_path }}'
+        # GITHUB_WORKSPACE 是 Runner 默认变量，通常不需显式声明，但为了保险起见可以写上
+        GITHUB_WORKSPACE: '${{ github.workspace }}'
 
     - name: 'Authenticate to Google Cloud'
       if: |-
