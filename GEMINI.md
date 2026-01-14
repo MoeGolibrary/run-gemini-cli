@@ -1,39 +1,36 @@
-## Guidelines for Developing this GitHub Action
+# 项目守则 & 上下文
 
-This project is a **composite GitHub Action**, designed to be reusable, efficient, and secure for other developers.
+你必须遵循以下项目守则，否则你的任何请求将被拒绝。
 
-Your primary goal is to ensure that any changes you make adhere to the best practices for creating high-quality GitHub Actions.
+## 1. 语言与交互
 
-### Core Principles for This Action
+- **输出语言**: 请全程使用 **简体中文** 进行交流和生成内容。
 
-1.  **Understand the `action.yml` Manifest:**
-    - This is the heart of the action. It defines inputs, outputs, branding, and the execution steps.
-    - When adding or modifying functionality, ensure the `action.yml` is updated clearly and correctly.
-    - Inputs should have clear descriptions and indicate whether they are required.
+## 2. 安全守则
 
-2.  **Embrace Composability:**
-    - This is a composite action, meaning it runs a series of shell commands. This makes it lightweight and fast.
-    - Prefer using standard, portable shell commands (`sh`) to ensure compatibility across different runners.
-    - Avoid introducing complex dependencies that would require a containerized action unless absolutely necessary.
+1. **分支保护**: 绝对禁止直接修改 `main` 分支和 `release` 分支（必须通过 Pull Request 合并）。
 
-3.  **Security is Paramount:**
-    - **Never expose secrets.** Set required tokens and keys as environment variables using `secrets` in your workflows.
-    - **Principle of Least Privilege:** When documenting required permissions for the action (in the `README.md`), always recommend the minimum set of permissions necessary for the action to function.
+## 3. 分支命名规范
 
-4.  **Prioritize User Experience:**
-    - **Clear Documentation:** The `README.md` is our user manual. It must be kept up-to-date with any changes to inputs, outputs, or required permissions. Usage examples are critical.
-    - **Informative Logging:** The action should produce clear log output that helps users understand what it's doing and diagnose problems.
-    - **Graceful Failure:** If the action encounters an error, it should exit with a non-zero status code and provide a meaningful error message.
+- **格式**: `prefix-description` (仅使用连字符 `-`，**严禁**使用斜杠 `/`)
+- **必须前缀**: `feature-` 或 `bugfix-`
+- **长度约束**:
+  - 总长度不超过 **30 字符**。
+  - 描述部分（前缀后）尽量不超过 **3 个单词**。
+- **示例**:
+  - ✅ `feature-login-ui`
+  - ✅ `bugfix-api-crash`
+  - ❌ `feature/login` (使用了斜杠)
+  - ❌ `feat-login` (前缀错误)
 
-5.  **Maintain Workflow Examples:**
-    - The files in the `/examples` directory are crucial for demonstrating how to use this action.
-    - Ensure they are kept in sync with the latest features and best practices.
+## 4. Commit & PR 标题规范
 
-### Your Role in Development
-
-When asked to modify the action, you should:
-
-1.  **Analyze the Request:** Understand how the requested change impacts the `action.yml`, the shell scripts, and the documentation.
-2.  **Plan Your Changes:** Propose a plan that includes modifications to all relevant files.
-3.  **Implement and Verify:** Make the changes and ensure the action still functions as expected. While we can't run the action here, you should mentally trace the execution flow.
-4.  **Update Documentation:** Ensure the `README.md` and any relevant examples are updated to reflect your changes.
+- **格式**: `<type>: <subject> <issue-id>`
+- **Type 白名单**: `feat`, `fix`, `styles`, `perf`, `docs`
+- **单号规则 (Issue ID)**:
+  - 必须位于标题的 **最末尾**。
+  - 若未指定具体单号，**必须**使用默认值 `IFRFE-0`。
+- **示例**:
+  - ✅ `feat: add user list api IFRFE-1024`
+  - ✅ `styles: fix header padding MER-0`
+  - ❌ `feat: add user list api` (未指定单号)
