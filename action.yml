@@ -4,7 +4,7 @@
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+#     http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -204,10 +204,7 @@ runs:
         DEST_DIR=".gemini/commands"
         mkdir -p "$DEST_DIR"
 
-        # 定义源目录
-        # 1. Action 自带的命令目录
         ACTION_SRC="${GITHUB_ACTION_PATH}/.github/commands"
-        # 2. 用户仓库的命令目录 (Workspace)
         USER_SRC="${GITHUB_WORKSPACE}/.github/commands"
 
         install_commands() {
@@ -215,10 +212,8 @@ runs:
           local source_name="$2"
 
           if [[ -d "$src" ]]; then
-            # 检查目录是否为空 (ls -A 检测除 . 和 .. 之外的所有文件)
             if [ "$(ls -A "$src")" ]; then
               echo "Installing ${source_name}..."
-              # 使用 cp -r src/. dst/ 的写法可以将隐藏文件一并复制，且不会因 glob 失败报错
               cp -r "$src/." "$DEST_DIR/"
             else
               echo "Found ${source_name} directory but it is empty. Skipping."
@@ -228,20 +223,42 @@ runs:
           fi
         }
 
-        # --- 执行安装流程 ---
-        
-        # 第一步：安装 Action 内置命令 (作为底座)
         install_commands "$ACTION_SRC" "Default commands (from Action)"
-
-        # 第二步：安装用户自定义命令 (如有同名文件，将覆盖内置命令)
         install_commands "$USER_SRC" "Custom commands (from User Repository)"
 
-        # 调试信息：列出最终安装的命令
         echo "Final list of installed commands:"
         ls -la "$DEST_DIR"
       env:
         GITHUB_ACTION_PATH: '${{ github.action_path }}'
-        # GITHUB_WORKSPACE 是 Runner 默认变量，通常不需显式声明，但为了保险起见可以写上
+        GITHUB_WORKSPACE: '${{ github.workspace }}'
+
+    - name: 'Add Gemini Context'
+      shell: 'bash'
+      run: |-
+        set -euo pipefail
+        
+        # Path to the GEMINI.md in the Action's root directory
+        ACTION_CONTEXT="${GITHUB_ACTION_PATH}/GEMINI.md"
+        # Path to the GEMINI.md in the User's workspace root
+        USER_CONTEXT="${GITHUB_WORKSPACE}/GEMINI.md"
+
+        if [[ -f "$ACTION_CONTEXT" ]]; then
+          if [[ -f "$USER_CONTEXT" ]]; then
+            echo "Found existing GEMINI.md in repository. Prepending default context from Action..."
+            # Prepend logic: Concatenate Action context + User context into a temp file, then overwrite user file
+            # Adding a newline between files to ensure separation
+            cat "$ACTION_CONTEXT" <(echo) "$USER_CONTEXT" > "${USER_CONTEXT}.tmp"
+            mv "${USER_CONTEXT}.tmp" "$USER_CONTEXT"
+          else
+            echo "No GEMINI.md found in repository. Copying default context from Action..."
+            cp "$ACTION_CONTEXT" "$USER_CONTEXT"
+          fi
+          echo "Gemini Context (GEMINI.md) successfully prepared."
+        else
+          echo "No default GEMINI.md found in Action root ($ACTION_CONTEXT). Skipping context addition."
+        fi
+      env:
+        GITHUB_ACTION_PATH: '${{ github.action_path }}'
         GITHUB_WORKSPACE: '${{ github.workspace }}'
 
     - name: 'Authenticate to Google Cloud'
