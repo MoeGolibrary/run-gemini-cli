@@ -37,4 +37,4 @@
  
 # Knowledge
 
-你可以通过阅读 READMD.md 以及 docs/ 目录下 md 文件，以及根目录的 md 文件，获取关于项目的基础知识。
+你可以通过阅读 README.md 以及 docs/ 目录下 md 文件，以及根目录的 md 文件，获取关于项目的基础知识。
