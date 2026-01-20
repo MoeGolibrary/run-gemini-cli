@@ -34,3 +34,7 @@
   - ✅ `feat: add user list api IFRFE-1024`
   - ✅ `styles: fix header padding MER-0`
   - ❌ `feat: add user list api` (未指定单号)
+ 
+# Knowledge
+
+你可以通过阅读 READMD.md 以及 docs/ 目录下 md 文件，以及根目录的 md 文件，获取关于项目的基础知识。
