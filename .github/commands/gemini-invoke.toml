@@ -53,6 +53,7 @@ prompt = """
     - **额外上下文/请求**：!{echo $ADDITIONAL_CONTEXT}
 
 2. **使用工具深入获取上下文**：使用 `get_issue`、`pull_request_read.get_diff` 和 `get_file_contents` 来彻底调查请求。
+3. **读取个性规则**： 遵循根目录中 `GEMINI.md` 不与本提示词冲突的所有项，并严格执行。
 
 -----
 
