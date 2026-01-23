@@ -18,9 +18,4 @@ jobs:
       id-token: "write"
       issues: "write"
       pull-requests: "write"
-    secrets:
-      GEMINI_CLI_API_KEY: "${{ secrets.GEMINI_CLI_API_KEY }}"
-      APP_PRIVATE_KEY: "${{ secrets.APP_PRIVATE_KEY }}"
-      GOOGLE_API_KEY: "${{ secrets.GOOGLE_API_KEY }}"
-      ACTIONS_APP_ID: "${{ secrets.ACTIONS_APP_ID }}"
-      ACTIONS_PRIVATE_KEY: "${{ secrets.ACTIONS_PRIVATE_KEY }}"
+    secrets: "inherit"
