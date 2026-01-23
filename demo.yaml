@@ -1,0 +1,26 @@
+name: "🔀 Gemini Dispatch"
+
+on:
+  pull_request_review_comment:
+    types: ["created"]
+  pull_request_review:
+    types: ["submitted"]
+  pull_request:
+    types: ["opened", "reopened"]
+  issue_comment:
+    types: ["created"]
+
+jobs:
+  dispatch:
+    uses: "MoeGolibrary/moego-actions-tool/.github/workflows/gemini-dispatch.yml@production"
+    permissions:
+      contents: "write"
+      id-token: "write"
+      issues: "write"
+      pull-requests: "write"
+    secrets:
+      GEMINI_CLI_API_KEY: "${{ secrets.GEMINI_CLI_API_KEY }}"
+      APP_PRIVATE_KEY: "${{ secrets.APP_PRIVATE_KEY }}"
+      GOOGLE_API_KEY: "${{ secrets.GOOGLE_API_KEY }}"
+      ACTIONS_APP_ID: "${{ secrets.ACTIONS_APP_ID }}"
+      ACTIONS_PRIVATE_KEY: "${{ secrets.ACTIONS_PRIVATE_KEY }}"
