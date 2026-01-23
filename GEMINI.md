@@ -43,4 +43,3 @@
 
 如果需要进行 PR review 工作
 1. 应当且必须将英文语句拼写错误、语法不恰当、时态冗余等“非母语常犯错误”作为 comment 点在后续提交。
-2. 读取目标 .github/workflows/ 中和 gemini dispatch 有关系的 yaml/yml 文件，如果它不和 `demo.yaml` 一致，提示更新。
