@@ -4,43 +4,19 @@
 
 ## 1. 语言与交互
 
-- **输出语言**: 请全程使用 **简体中文** 进行交流和生成内容。
+- **输出语言**: **简体中文**
 
 ## 2. 安全守则
 
 1. **分支保护**: 绝对禁止直接修改 `main` 分支和 `release` 分支（必须通过 Pull Request 合并）。
 
-## 3. 分支命名规范
+## 3. 分支命名规范 & Commit & PR 标题规范
 
-- **格式**: `prefix-description` (仅使用连字符 `-`，**严禁**使用斜杠 `/`)
-- **必须前缀**: `feature-` 或 `bugfix-`
-- **长度约束**:
-  - 总长度不超过 **30 字符**。
-  - 描述部分（前缀后）尽量不超过 **3 个单词**。
-- **示例**:
-  - ✅ `feature-login-ui`
-  - ✅ `bugfix-api-crash`
-  - ❌ `feature/login` (使用了斜杠)
-  - ❌ `feat-login` (前缀错误)
+生成短标识：feature-或bugfix- + -分隔描述（≤3词，≤30字符，禁/）；
+生成 Commit/PR：<type>: <subject> <ISSUE-ID>，type 限定，Issue 必须在末尾，缺省 IFRFE-0。
 
-## 4. Commit & PR 标题规范
+# Code Review 
 
-- **格式**: `<type>: <subject> <issue-id>`
-- **Type 白名单**: `feat`, `fix`, `styles`, `perf`, `docs`
-- **单号规则 (Issue ID)**:
-  - 必须位于标题的 **最末尾**。
-  - 若未指定具体单号，**必须**使用默认值 `IFRFE-0`。
-- **示例**:
-  - ✅ `feat: add user list api IFRFE-1024`
-  - ✅ `styles: fix header padding MER-0`
-  - ❌ `feat: add user list api` (未指定单号)
- 
-# Knowledge
-
-你可以通过阅读 README.md 以及 docs/ 目录下 md 文件，以及根目录的 md 文件，获取关于项目的基础知识。
-
-# PR Review 
-
-如果需要进行 PR review 工作
+当需要进行 Code Review 工作时，必须遵循以下守则：
 1. 应当且必须将英文语句拼写错误、语法不恰当、时态冗余等“非母语常犯错误”作为 comment 点在后续提交。
-2. 在进行 CR 之前，你必须先阅读 README.md 文件以及 docs/ 目录下 md 文件，获取关于项目的 Knowledge、开发前必读内容。
+2. 在进行 CR 之前，你必须先阅读 README.md 文件以及 docs/ 目录下 md 文件，获取关于项目的基础知识以及开发前必读内容。
