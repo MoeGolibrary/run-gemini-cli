@@ -254,6 +254,12 @@ runs:
             cp "$ACTION_CONTEXT" "$USER_CONTEXT"
           fi
           echo "Gemini Context (GEMINI.md) successfully prepared."
+
+          echo ""
+          echo ">>> START OF GEMINI.md CONTENT <<<"
+          cat "$USER_CONTEXT"
+          echo ">>> END OF GEMINI.md CONTENT <<<"
+          echo ""
         else
           echo "No default GEMINI.md found in Action root ($ACTION_CONTEXT). Skipping context addition."
         fi
