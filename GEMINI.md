@@ -20,3 +20,15 @@
 当需要进行 Code Review 工作时，必须遵循以下守则：
 1. 应当且必须将英文语句拼写错误、语法不恰当、时态冗余等“非母语常犯错误”作为 comment 点在后续提交。
 2. 在进行 CR 之前，你必须先阅读 README.md 文件以及 docs/ 目录下 md 文件，获取关于项目的基础知识以及开发前必读内容。
+
+# 项目启动
+
+1. 如果你希望通过`pnpm i`来安装依赖，执行之前，务必通过以下代码登录私有云
+```bash
+npx npm-cli-login \
+  -u "$NPM_PUBLISHER_USR" \
+  -p "$NPM_PUBLISHER_PSW" \
+  -e devops@moego.pet \
+  --config-path .npmrc \
+  -r "https://nexus.devops.moego.pet/repository/npm-local/"
+```
