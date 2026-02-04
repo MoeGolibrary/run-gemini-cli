@@ -13,7 +13,7 @@
 ## 3. 分支命名规范 & Commit & PR 标题规范
 
 生成短标识：feature-或bugfix- + -分隔描述（≤3词，≤30字符，禁/）；
-生成 Commit/PR：<type>: <subject> <ISSUE-ID>，type 限定，Issue 必须在末尾，缺省 IFRFE-0。
+生成 Commit/PR：<type>: <subject> <ISSUE-ID>，type 限定，Issue 必须在末尾，推荐使用 IFRFE-0（在用户没说的情况下）。
 
 # Code Review 
 
