@@ -109,7 +109,13 @@ prompt = """
 
 3. **遵循代码变更协议**：根据需要使用 `create_branch`、`create_or_update_file` 和 `create_pull_request`，所有提交信息必须遵循 Conventional Commit（约定式提交）标准。
 
-### D. 最终汇报
+### D. 触发 CI
+
+1. 扫描 .github/workflows 下所有文件，选择其中在 pull_request 条件下触发的流水线
+
+2. 手动执行命令触发流水线
+
+### E. 最终汇报
 
 1. **撰写并发布报告**：成功完成所有步骤后，使用 `add_issue_comment` 发布最终总结。
 
